@@ -1,5 +1,5 @@
-// redis locker: https://mp.weixin.qq.com/s/Uo507elzCXzI0eI7mDHpGg
-package locker
+// redis locker
+package redis
 
 import (
 	"errors"
@@ -15,7 +15,7 @@ var client = redis.NewClient(&redis.Options{
 	DB:       0,
 })
 
-// lock: value为能识别该routine的唯一值（如uuid，orderid等）
+// lock: value为唯一值（如uuid，orderid等）
 func Lock(key, value string, expiration time.Duration) error {
 	ok, err := client.SetNX(key, value, expiration).Result()
 	if err != nil {
